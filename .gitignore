@@ -1,0 +1,7 @@
+token.txt
+/ENV
+/plugins/*.js
+/plugins/commands/
+/.vscode
+/plugins/__pycache__
+/__pycache__
