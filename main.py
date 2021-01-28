@@ -11,11 +11,8 @@ def readConfig():
 
 config = readConfig()
 
-# client = discord.Client()
 bot = Bot(command_prefix=config["commandPrefix"])
-
-with open("token.txt") as fp:
-    TOKEN = fp.read()
+TOKEN = config["botToken"]
 
 
 @bot.event

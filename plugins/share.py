@@ -23,13 +23,14 @@ conn = connect.createConnection(database)
 
 @commands.command(
     name="share",
-    alias=['share'],
+    aliases=['server'],
     description="Share your server with every server with this bot installed",
     usage=""
 )
 async def share(ctx):
     inviteLink = ""
     description = ""
+    msgText = ""
     userTable = connect.getData(conn)
     author = str(ctx.author)[:-5]
     guild = str(ctx.guild)
@@ -45,7 +46,10 @@ async def share(ctx):
                 msgText = ("**Server:** " + guild + "\n"
                            + "**Link:** " + inviteLink)
 
-    await ctx.send(msgText)
+    for server in ctx.bot.guilds:
+        for channel in server.channels:
+            if channel.name == "bot-testing":
+                await channel.send(msgText)
 
 
 def setup(bot):
