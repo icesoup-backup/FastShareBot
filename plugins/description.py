@@ -23,7 +23,7 @@ conn = connect.createConnection(database)
 
 @commands.command(
     name="description",
-    alias=['description'],
+    aliases=['sd'],
     description="Add or Update your servers description",
     usage=""
 )

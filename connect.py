@@ -36,24 +36,20 @@ def getData(conn):
     """
     Query all enities in the Users table
     :param conn: the Connection object
-    :return:
+    :return: rows
     """
     cur = conn.cursor()
     cur.execute("SELECT * FROM Users")
 
     rows = cur.fetchall()
-
-    # for row in rows:
-    #     print(row)
     return rows
 
 
 def updateTime(conn, data):
     """
-    update last share time of a user
+    update the lastShareTime of a user
     :param conn:
     :param data:
-    :return: project id
     """
     sql = ''' UPDATE Users
               SET lastShareTime = ?
@@ -61,6 +57,23 @@ def updateTime(conn, data):
     cur = conn.cursor()
     cur.execute(sql, data)
     conn.commit()
+
+
+def getTime(conn, data):
+    """
+    return the lastShareTime of a user
+    :param conn
+    :param data
+    :return: Hours since last share
+    """
+    sql = ''' SELECT (strftime('%s','now') - strftime('%s',lastShareTime)) / 3600
+              FROM Users
+              WHERE username = ?'''
+    cur = conn.cursor()
+    cur.execute(sql, data)
+    hoursSinceShare = cur.fetchall()
+    conn.commit()
+    return hoursSinceShare
 
 
 def updateDescription(conn, data):
@@ -77,17 +90,19 @@ def updateDescription(conn, data):
     cur.execute(sql, data)
     conn.commit()
 
-# def main():
-#     database = r"bot"
 
-#     # create a database connection
-#     conn = createConnection(database)
-#     # create a new project
-#     # user = ('Admin', '3', 'google.com',"","9:19:52")
-#     # userID = createUser(conn, user)
-#     test = getData(conn)
-#     print(test)
+def main():
+    database = r"bot"
+
+    # create a database connection
+    conn = createConnection(database)
+    # create a new project
+    # user = ('Admin', '3', 'google.com',"","9:19:52")
+    # userID = createUser(conn, user)
+    test = getTime(conn, ["Sadeed"])
+    # test = getData(conn)
+    print(test)
 
 
-# if __name__ == '__main__':
-#     main()
+if __name__ == '__main__':
+    main()
