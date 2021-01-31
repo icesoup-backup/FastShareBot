@@ -103,7 +103,7 @@ async def checkTime(ctx, timeLeft, waitHours, username, msgText, channel):
     global flagShare
     waitHours -= 1
     match = re.search(r"[a-z]", timeLeft[0])
-    if(match is not None):
+    if match is not None:
         days = int(re.findall(r"^\d+", timeLeft[0])[0])
         # print(timeLeft)
         # print(days)
