@@ -61,7 +61,7 @@ async def share(ctx):
                 unixTime = connect.getTime(conn, [author])[0]
                 timeLeft = str(datetime.timedelta(seconds=unixTime)).split(":")
                 # print(timeLeft)
-                timeLeft[0] = re.sub(r"^\d+\s\w+\D\s", "", timeLeft[0])
+                # timeLeft[0] = re.sub(r"^\d+\s\w+\D\s", "", timeLeft[0])
                 # print(timeLeft)
                 if subLevel == 0:
                     await checkTime(ctx, timeLeft, 24, author, msgText,
@@ -95,7 +95,17 @@ def setup(bot):
 
 async def checkTime(ctx, timeLeft, waitHours, username, msgText, channel):
     global flag
-    timeLeft
+    match = re.search(r"[a-z]", timeLeft[0])
+    print(match)
+    if(match is not None):
+        days = int(re.findall(r"^\d+", timeLeft[0])[0])
+        # print(timeLeft)
+        # print(days)
+        # convert days to hours & add to hours
+        timeLeft[0] = str((days*24) +
+                          int(re.sub(r"^\d+\s\w+\D\s", "", timeLeft[0])))
+        print(timeLeft)
+
     if int(timeLeft[0]) >= waitHours:
         await channel.send(msgText)
     else:
