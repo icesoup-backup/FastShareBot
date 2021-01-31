@@ -1,5 +1,6 @@
 import sqlite3
 from sqlite3 import Error
+# import datetime
 
 
 def createConnection(db_file):
@@ -45,6 +46,22 @@ def getData(conn):
     return rows
 
 
+def getSubLevel(conn, data):
+    """
+    returns the subLevel of a user
+    :param conn
+    :param data
+    :return: Hours since last share
+    """
+    sql = ''' SELECT subLevel
+              FROM Users
+              WHERE username = ?'''
+    cur = conn.cursor()
+    cur.execute(sql, data)
+    subLevel = cur.fetchone()
+    return subLevel
+
+
 def updateTime(conn, data):
     """
     update the lastShareTime of a user
@@ -52,7 +69,7 @@ def updateTime(conn, data):
     :param data:
     """
     sql = ''' UPDATE Users
-              SET lastShareTime = ?
+              SET lastShareTime = datetime('now')
               WHERE username = ?'''
     cur = conn.cursor()
     cur.execute(sql, data)
@@ -61,17 +78,17 @@ def updateTime(conn, data):
 
 def getTime(conn, data):
     """
-    return the lastShareTime of a user
+    returns the lastShareTime of a user
     :param conn
     :param data
     :return: Hours since last share
     """
-    sql = ''' SELECT (strftime('%s','now') - strftime('%s',lastShareTime)) / 3600
+    sql = ''' SELECT (strftime('%s','now') - strftime('%s',lastShareTime))
               FROM Users
               WHERE username = ?'''
     cur = conn.cursor()
     cur.execute(sql, data)
-    hoursSinceShare = cur.fetchall()
+    hoursSinceShare = cur.fetchone()
     conn.commit()
     return hoursSinceShare
 
@@ -99,8 +116,10 @@ def main():
     # create a new project
     # user = ('Admin', '3', 'google.com',"","9:19:52")
     # userID = createUser(conn, user)
-    test = getTime(conn, ["Sadeed"])
+    # test = getTime(conn, ["Sadeed"])[0]
     # test = getData(conn)
+    # print(str(datetime.timedelta(seconds=test)).split(":"))
+    test = getSubLevel(conn, ["Sadeed"])[0]
     print(test)
 
 
