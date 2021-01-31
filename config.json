@@ -1,5 +1,5 @@
 {
     "botToken": "NzUyODM2MjgzMjg5ODI5Mzk2.X1dbbA.xI-nRw0iErByNWWQ4XTvNG0yeDk",
-    "commandPrefix": ">",
+    "commandPrefix": ".",
     "databaseLocation": "bot"
 }

@@ -3,5 +3,6 @@ token.txt
 /plugins/*.js
 /plugins/commands/
 /.vscode
+/.idea
 /plugins/__pycache__
 /__pycache__
