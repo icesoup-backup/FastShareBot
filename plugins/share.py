@@ -22,6 +22,7 @@ config = readConfig()
 database = config["databaseLocation"]
 conn = connect.createConnection(database)
 flag = False
+flagShare = False
 
 
 @commands.command(
@@ -41,6 +42,8 @@ async def share(ctx):
     author = str(ctx.author)[:-5]
     guild = str(ctx.guild)
     subLevel = connect.getSubLevel(conn, [author])[0]
+    serverCount = len(ctx.bot.guilds)
+    loopCount = 0
     for row in userTable:
         if(row[1] == author):
             inviteLink = row[3]
@@ -54,13 +57,13 @@ async def share(ctx):
                            + "**Link:** " + inviteLink)
 
     # return total servers with the bot
-    print("Servers: " + str(len(ctx.bot.guilds)))
+    print(f"Shared to {serverCount} servers")
     for server in ctx.bot.guilds:
+        loopCount += 1
         for channel in server.channels:
             if channel.name == "bot-testing":
                 unixTime = connect.getTime(conn, [author])[0]
                 timeLeft = str(datetime.timedelta(seconds=unixTime)).split(":")
-                # print(timeLeft)
                 # timeLeft[0] = re.sub(r"^\d+\s\w+\D\s", "", timeLeft[0])
                 # print(timeLeft)
                 if subLevel == 0:
@@ -86,7 +89,9 @@ async def share(ctx):
                 #                        + " seconds`")
                 # await ctx.send("Please wait: `" +
                 #                str(12 - hoursPast) + " hours ")
-    # connect.updateTime(conn, [author])
+    if loopCount == serverCount:
+        if flagShare is True:
+            connect.updateTime(conn, [author])
 
 
 def setup(bot):
@@ -95,8 +100,9 @@ def setup(bot):
 
 async def checkTime(ctx, timeLeft, waitHours, username, msgText, channel):
     global flag
+    global flagShare
+    waitHours -= 1
     match = re.search(r"[a-z]", timeLeft[0])
-    print(match)
     if(match is not None):
         days = int(re.findall(r"^\d+", timeLeft[0])[0])
         # print(timeLeft)
@@ -104,14 +110,16 @@ async def checkTime(ctx, timeLeft, waitHours, username, msgText, channel):
         # convert days to hours & add to hours
         timeLeft[0] = str((days*24) +
                           int(re.sub(r"^\d+\s\w+\D\s", "", timeLeft[0])))
-        print(timeLeft)
+        # print(timeLeft)
 
     if int(timeLeft[0]) >= waitHours:
         await channel.send(msgText)
+        flagShare = True
     else:
         if flag is False:
             # print(f"Share: {flag}")
             flag = True
+            # flagShare = False
             # print(f"Share: {flag}")
             await ctx.send(f"Please wait: `{waitHours - int(timeLeft[0])}"
                            f" hours {60 - int(timeLeft[1])}"
