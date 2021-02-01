@@ -1,4 +1,5 @@
 from discord.ext.commands import Bot
+import discord
 import os
 import json
 
@@ -17,7 +18,9 @@ def getPrefix(client, message):
 
 config = readConfig()
 
-bot = Bot(command_prefix=getPrefix)
+intents = discord.Intents.default()
+intents.members = True
+bot = Bot(command_prefix=getPrefix, intents=intents)
 TOKEN = config["botToken"]
 
 
@@ -28,7 +31,6 @@ async def on_guild_join(guild):
     prefixes[str(guild.id)] = '!'
     with open('prefixes.json', 'w') as f:
         json.dump(prefixes, f, indent=4)
-    print(guild.owner)
 
 
 @bot.event
