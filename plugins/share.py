@@ -46,9 +46,9 @@ async def share(ctx):
     loopCount = 0
     for row in userTable:
         if(row[1] == author):
-            inviteLink = row[3]
-            if(row[2] > 1 and row[2] < 4):
-                description = row[4]
+            inviteLink = row[4]
+            if(subLevel > 1 and subLevel < 4):
+                description = row[5]
                 msgText = ("**Server:** " + guild + "\n"
                            + "**Description:** " + description + "\n"
                            + "**Link:** " + inviteLink)
@@ -119,9 +119,9 @@ async def checkTime(ctx, timeLeft, waitHours, username, msgText, channel):
         if flag is False:
             # print(f"Share: {flag}")
             flag = True
-            # flagShare = False
-            # print(f"Share: {flag}")
+            flagShare = False
+            print(f"Share: {flagShare}")
             await ctx.send(f"Please wait: `{waitHours - int(timeLeft[0])}"
-                           f" hours {60 - int(timeLeft[1])}"
+                           f" hours {59 - int(timeLeft[1])}"
                            f" minutes {60 - int(timeLeft[2])}"
                            " seconds`")

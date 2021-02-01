@@ -13,7 +13,7 @@ async def reload(ctx, command):
     except ExtensionNotLoaded:
         ctx.bot.load_extension(f"plugins.{command}")
         print(f"[Loaded] {command}.py")
-    await ctx.send(f"{command} reloaded!")
+    await ctx.send(f"Reloaded: `{command}`")
 
 
 def setup(bot):

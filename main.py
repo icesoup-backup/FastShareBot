@@ -9,10 +9,35 @@ def readConfig():
     return config
 
 
+def getPrefix(client, message):
+    with open('prefixes.json', 'r') as f:
+        prefixes = json.load(f)
+    return prefixes[str(message.guild.id)]
+
+
 config = readConfig()
 
-bot = Bot(command_prefix=config["commandPrefix"])
+bot = Bot(command_prefix=getPrefix)
 TOKEN = config["botToken"]
+
+
+@bot.event
+async def on_guild_join(guild):
+    with open('prefixes.json', 'r') as f:
+        prefixes = json.load(f)
+    prefixes[str(guild.id)] = '!'
+    with open('prefixes.json', 'w') as f:
+        json.dump(prefixes, f, indent=4)
+    print(guild.owner)
+
+
+@bot.event
+async def on_guild_remove(guild):
+    with open('prefixes.json', 'r') as f:
+        prefixes = json.load(f)
+    prefixes.pop(str(guild.id))
+    with open('prefixes.json', 'w') as f:
+        json.dump(prefixes, f, indent=4)
 
 
 @bot.event
