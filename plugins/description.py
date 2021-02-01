@@ -30,13 +30,12 @@ conn = connect.createConnection(database)
 async def description(ctx, *args):
     description = " ".join(args)
     author = str(ctx.author)[:-5]
-    connect.updateDescription(conn, (description, author))
-    # for row in userTable:
-    #     if(row[1] == author):
-    #         inviteLink = row[3]
-    #         if(row[2] > 1 and row[2] < 4):
-    #             description = row[4]
-    await ctx.send("Description updated !")
+    subLevel = connect.getSubLevel(conn, [author])[0]
+    if subLevel >= 2:
+        connect.updateDescription(conn, (description, author))
+        await ctx.send("Description updated !")
+    else:
+        await ctx.send("Please upgrade your subscription plan")
 
 
 def setup(bot):
