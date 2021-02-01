@@ -61,7 +61,7 @@ async def share(ctx):
     for server in ctx.bot.guilds:
         loopCount += 1
         for channel in server.channels:
-            if channel.name == "bot-testing":
+            if channel.name == config["defaultChannel"]:
                 unixTime = connect.getTime(conn, [author])[0]
                 timeLeft = str(datetime.timedelta(seconds=unixTime)).split(":")
                 # timeLeft[0] = re.sub(r"^\d+\s\w+\D\s", "", timeLeft[0])

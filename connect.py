@@ -1,6 +1,5 @@
 import sqlite3
 from sqlite3 import Error
-# import datetime
 
 
 def createConnection(db_file):
@@ -20,13 +19,13 @@ def createConnection(db_file):
 
 def createUser(conn, user):
     """
-    Create a new project into the Users table
+    Create a new entry in the Users table
     :param conn:
     :param user:
     :return: user id
     """
-    sql = ''' INSERT INTO Users(username,subLevel,inviteLink,description,lastShareTime)
-              VALUES(?,?,?,?,?) '''
+    sql = ''' INSERT INTO Users(username,guildName,inviteLink)
+              VALUES(?,?,?) '''
     cur = conn.cursor()
     cur.execute(sql, user)
     conn.commit()

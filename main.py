@@ -2,6 +2,7 @@ from discord.ext.commands import Bot
 import discord
 import os
 import json
+import connect
 
 
 def readConfig():
@@ -10,27 +11,49 @@ def readConfig():
     return config
 
 
+config = readConfig()
+
+
 def getPrefix(client, message):
     with open('prefixes.json', 'r') as f:
         prefixes = json.load(f)
     return prefixes[str(message.guild.id)]
 
 
-config = readConfig()
-
 intents = discord.Intents.default()
 intents.members = True
 bot = Bot(command_prefix=getPrefix, intents=intents)
 TOKEN = config["botToken"]
+database = config["databaseLocation"]
+channelName = config["defaultChannel"]
+categoryName = config["defaultCategory"]
+conn = connect.createConnection(database)
 
 
 @bot.event
 async def on_guild_join(guild):
+    # handling server prefixes
     with open('prefixes.json', 'r') as f:
         prefixes = json.load(f)
     prefixes[str(guild.id)] = '!'
     with open('prefixes.json', 'w') as f:
         json.dump(prefixes, f, indent=4)
+
+    # creating a new channel for sharing servers
+    serverOwner = str(guild.owner)[:-5]
+    serverName = guild.name
+    category = discord.utils.get(guild.categories, name=categoryName)
+    inviteChannel = await guild.create_text_channel(name=channelName,
+                                                    category=category)
+    serverInvite = str(await inviteChannel.create_invite())
+    # print(f"Owner: {serverOwner} \n Name: {serverName} \n"
+    #       f"Invite: {serverInvite}")
+
+    # print(f"Owner: {type(serverOwner)} \n Name: {type(serverName)} \n"
+    #       f"Invite: {type(serverInvite)}")
+    # creating a databse entry for the server
+    data = (serverOwner, serverName, serverInvite)
+    connect.createUser(conn, data)
 
 
 @bot.event
