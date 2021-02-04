@@ -50,7 +50,7 @@ def getSubLevel(conn, data):
     returns the subLevel of a user
     :param conn
     :param data
-    :return: Hours since last share
+    :return: subLevel
     """
     sql = ''' SELECT subLevel
               FROM Users
@@ -59,6 +59,22 @@ def getSubLevel(conn, data):
     cur.execute(sql, data)
     subLevel = cur.fetchone()
     return subLevel
+
+
+def getGuild(conn, data):
+    """
+    returns the guildName of a user
+    :param conn
+    :param data
+    :return: guildName
+    """
+    sql = ''' SELECT guildName
+              FROM Users
+              WHERE username = ?'''
+    cur = conn.cursor()
+    cur.execute(sql, data)
+    guildName = cur.fetchone()
+    return guildName
 
 
 def updateTime(conn, data):
