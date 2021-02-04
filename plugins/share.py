@@ -60,8 +60,9 @@ async def share(ctx):
     print(f"Shared to {serverCount} servers")
     for server in ctx.bot.guilds:
         loopCount += 1
+        print(f"Name: {server.name} \nID: {str(server.id)}")
         for channel in server.channels:
-            if channel.name == config["defaultChannel"]:
+            if channel.name == config["Channels"].get(str(server.id)):
                 unixTime = connect.getTime(conn, [author])[0]
                 timeLeft = str(datetime.timedelta(seconds=unixTime)).split(":")
                 # timeLeft[0] = re.sub(r"^\d+\s\w+\D\s", "", timeLeft[0])
