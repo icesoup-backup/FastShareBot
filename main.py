@@ -38,11 +38,11 @@ async def on_guild_join(guild):
         json.dump(prefixes, f, indent=4)
 
     # handling custom sharing channels
-        with open('config.json', 'r') as f:
-            config = json.load(f)
-        config["Channels"].update({str(guild.id): defaultChannel})
-        with open('config.json', 'w') as f:
-            json.dump(config, f, indent=4)
+    with open('config.json', 'r') as f:
+        config = json.load(f)
+    config["Channels"].update({str(guild.id): defaultChannel})
+    with open('config.json', 'w') as f:
+        json.dump(config, f, indent=4)
 
     # creating a new channel for sharing servers
     serverOwner = str(guild.owner)
@@ -72,11 +72,19 @@ async def on_guild_join(guild):
 
 @bot.event
 async def on_guild_remove(guild):
+    # handling server prefixes
     with open('prefixes.json', 'r') as f:
         prefixes = json.load(f)
     prefixes.pop(str(guild.id))
     with open('prefixes.json', 'w') as f:
         json.dump(prefixes, f, indent=4)
+
+    # handling custom sharing channels
+    with open('config.json', 'r') as f:
+        config = json.load(f)
+    config["Channels"].pop(str(guild.id))
+    with open('config.json', 'w') as f:
+        json.dump(config, f, indent=4)
 
 
 @bot.event

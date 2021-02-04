@@ -4,7 +4,8 @@
     "defaultChannel": "bot-testing2",
     "defaultCategory": "Test",
     "Channels": {
-        "802863664775823390": "bot-testing2",
-        "437252877916831744": "server"
+        "802863664775823390": "testing-zone",
+        "437252877916831744": "bot-testing1",
+        "806464440684904469": "bot-testingx"
     }
 }
