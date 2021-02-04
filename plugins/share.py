@@ -39,7 +39,7 @@ async def share(ctx):
     flag = False
     # print(f"Share: {flag}")
     userTable = connect.getData(conn)
-    author = str(ctx.author)[:-5]
+    author = str(ctx.author)
     guild = str(ctx.guild)
     subLevel = connect.getSubLevel(conn, [author])[0]
     serverCount = len(ctx.bot.guilds)
@@ -49,12 +49,12 @@ async def share(ctx):
             inviteLink = row[4]
             if(subLevel > 1 and subLevel < 4):
                 description = row[5]
-                msgText = ("**Server:** " + guild + "\n"
-                           + "**Description:** " + description + "\n"
-                           + "**Link:** " + inviteLink)
+                msgText = (f"**Server:** {guild} \n"
+                           f"**Description:** {description} \n"
+                           f"**Link:** {inviteLink}")
             else:
-                msgText = ("**Server:** " + guild + "\n"
-                           + "**Link:** " + inviteLink)
+                msgText = (f"**Server:** {guild} \n"
+                           f"**Link:** {inviteLink}")
 
     # return total servers with the bot
     print(f"Shared to {serverCount} servers")
@@ -77,18 +77,6 @@ async def share(ctx):
                                     channel)
                 else:
                     await channel.send(msgText)
-                # if int(timeLeft[0]) >= 12:
-                #     await channel.send(msgText)
-                # else:
-                #     if share is False:
-                #         share = True
-                #         await ctx.send("**Please wait:** "
-                #                        + f"`{12 - int(timeLeft[0])}"
-                #                        + f" hours {60 - int(timeLeft[1])}"
-                #                        + f" minutes {60 - int(timeLeft[2])}"
-                #                        + " seconds`")
-                # await ctx.send("Please wait: `" +
-                #                str(12 - hoursPast) + " hours ")
     if loopCount == serverCount:
         if flagShare is True:
             connect.updateTime(conn, [author])
@@ -120,7 +108,7 @@ async def checkTime(ctx, timeLeft, waitHours, username, msgText, channel):
             # print(f"Share: {flag}")
             flag = True
             flagShare = False
-            print(f"Share: {flagShare}")
+            # print(f"Share: {flagShare}")
             await ctx.send(f"Please wait: `{waitHours - int(timeLeft[0])}"
                            f" hours {59 - int(timeLeft[1])}"
                            f" minutes {60 - int(timeLeft[2])}"

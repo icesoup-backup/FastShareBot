@@ -23,8 +23,8 @@ bot = Bot(command_prefix=getPrefix, intents=intents)
 config = readConfig()
 TOKEN = config["botToken"]
 database = config["databaseLocation"]
-channelName = config["defaultChannel"]
-categoryName = config["defaultCategory"]
+defaultChannel = config["defaultChannel"]
+defaultCategory = config["defaultCategory"]
 conn = connect.createConnection(database)
 
 
@@ -37,8 +37,15 @@ async def on_guild_join(guild):
     with open('prefixes.json', 'w') as f:
         json.dump(prefixes, f, indent=4)
 
+    # handling custom sharing channels
+        with open('config.json', 'r') as f:
+            config = json.load(f)
+        config["Channels"].update({str(guild.id): defaultChannel})
+        with open('config.json', 'w') as f:
+            json.dump(config, f, indent=4)
+
     # creating a new channel for sharing servers
-    serverOwner = str(guild.owner)[:-5]
+    serverOwner = str(guild.owner)
     serverName = guild.name
     overwrites = {
         guild.default_role: discord.PermissionOverwrite(
@@ -46,10 +53,10 @@ async def on_guild_join(guild):
         guild.owner: discord.PermissionOverwrite(read_messages=True)
     }
     category = await guild.create_category_channel(
-        name=categoryName,
+        name=defaultCategory,
         overwrites=overwrites)
     inviteChannel = await guild.create_text_channel(
-        name=channelName,
+        name=defaultChannel,
         overwrites=overwrites,
         category=category)
     serverInvite = str(await inviteChannel.create_invite())
