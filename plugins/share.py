@@ -40,7 +40,7 @@ async def share(ctx):
     # print(f"Share: {flag}")
     userTable = connect.getData(conn)
     author = str(ctx.author)
-    guild = str(ctx.guild)
+    guild = connect.getGuild(conn, [author])[0]
     subLevel = connect.getSubLevel(conn, [author])[0]
     serverCount = len(ctx.bot.guilds)
     loopCount = 0
