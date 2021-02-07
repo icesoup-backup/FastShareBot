@@ -29,7 +29,7 @@ conn = connect.createConnection(database)
 )
 async def description(ctx, *args):
     description = " ".join(args)
-    author = str(ctx.author)[:-5]
+    author = str(ctx.author)
     subLevel = connect.getSubLevel(conn, [author])[0]
     if subLevel >= 2:
         connect.updateDescription(conn, (description, author))

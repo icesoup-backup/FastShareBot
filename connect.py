@@ -20,8 +20,8 @@ def createConnection(db_file):
 def createUser(conn, user):
     """
     Create a new entry in the Users table
-    :param conn:
-    :param user:
+    :param conn: Connection object
+    :param user: [username,guildName,inviteLink]
     :return: user id
     """
     sql = ''' INSERT INTO Users(username,guildName,inviteLink)
@@ -48,8 +48,8 @@ def getData(conn):
 def getSubLevel(conn, data):
     """
     returns the subLevel of a user
-    :param conn
-    :param data
+    :param conn: connection object
+    :param data: Username
     :return: subLevel
     """
     sql = ''' SELECT subLevel
@@ -123,20 +123,34 @@ def updateDescription(conn, data):
     conn.commit()
 
 
-def main():
-    database = r"bot"
+def getAutoMsgData(conn):
+    """
+    get data to display in a message
+    :param conn:
+    :return: data of users with subLvl 3
+    """
+    sql = ''' SELECT guildName, inviteLink, description FROM Users
+              WHERE subLevel = 3 '''
+    cur = conn.cursor()
+    cur.execute(sql)
+    msgData = cur.fetchall()
+    return msgData
 
-    # create a database connection
-    conn = createConnection(database)
-    # create a new project
-    # user = ('Admin', '3', 'google.com',"","9:19:52")
-    # userID = createUser(conn, user)
-    # test = getTime(conn, ["Sadeed"])[0]
-    # test = getData(conn)
-    # print(str(datetime.timedelta(seconds=test)).split(":"))
-    test = getSubLevel(conn, ["Sadeed"])[0]
-    print(test)
+
+# def main():
+#     database = r"bot"
+
+#     # create a database connection
+#     conn = createConnection(database)
+#     # create a new project
+#     # user = ('Admin', '3', 'google.com',"","9:19:52")
+#     # userID = createUser(conn, user)
+#     # test = getTime(conn, ["Sadeed"])[0]
+#     # test = getData(conn)
+#     # print(str(datetime.timedelta(seconds=test)).split(":"))
+#     test = getAutoMsgData(conn)
+#     print(test[0][0])
 
 
-if __name__ == '__main__':
-    main()
+# if __name__ == '__main__':
+#     main()
