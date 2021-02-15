@@ -80,6 +80,7 @@ async def share(ctx):
                                     channel)
     if loopCount == serverCount:
         if flagShare is True:
+            await ctx.send(f":mega: Shared to `{serverCount}` servers")
             connect.updateTime(conn, [author])
 
 
