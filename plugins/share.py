@@ -28,8 +28,7 @@ flagShare = False
 @commands.command(
     name="share",
     aliases=['server'],
-    description="Share your server with every server with this bot installed",
-    usage=""
+    help="Share your server with every server with this bot installed"
 )
 async def share(ctx):
     inviteLink = ""
@@ -77,7 +76,8 @@ async def share(ctx):
                     await checkTime(ctx, timeLeft, 8, author, msgText,
                                     channel)
                 else:
-                    await channel.send(msgText)
+                    await checkTime(ctx, timeLeft, 4, author, msgText,
+                                    channel)
     if loopCount == serverCount:
         if flagShare is True:
             connect.updateTime(conn, [author])

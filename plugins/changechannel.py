@@ -22,8 +22,7 @@ conn = connect.createConnection(database)
 @commands.command(
     name="changechannel",
     aliases=['setchannel', 'setc'],
-    description="Change the default channel and category",
-    help="changechannel [Channel]"
+    help="Change the default channel and category"
 )
 @commands.has_permissions(administrator=True)
 async def changechannel(ctx, channel):

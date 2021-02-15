@@ -5,8 +5,7 @@ import json
 @commands.command(
     name="setprefix",
     aliases=['changeprefix', 'prefixset'],
-    description="Change the default prefix",
-    help="setfprefix [prefix]"
+    help="Change the default prefix"
 )
 @commands.has_permissions(administrator=True)
 async def setprefix(ctx, prefix):

@@ -1,4 +1,5 @@
 from discord.ext.commands import Bot
+from pretty_help import PrettyHelp, Navigation
 import discord
 import os
 import json
@@ -20,6 +21,12 @@ def getPrefix(client, message):
 intents = discord.Intents.default()
 intents.members = True
 bot = Bot(command_prefix=getPrefix, intents=intents)
+
+nav = Navigation()
+color = discord.Color.dark_gold()
+bot.help_command = PrettyHelp(
+    navigation=nav, color=color, active_time=5, no_category="Default")
+
 config = readConfig()
 TOKEN = config["botToken"]
 database = config["databaseLocation"]
@@ -92,7 +99,7 @@ async def on_ready():
     print("\033[0;33m""▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬""\033[0m")
     print("\033[0;92m""{0.user} bot is online!""\033[0m".format(bot))
     print("\033[0;33m""▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬""\033[0m")
-    bot.remove_command('help')
+    # bot.remove_command('help')
     for command in os.listdir("./plugins"):
         if command.endswith(".py"):
             print(f"[Loaded] {command}")

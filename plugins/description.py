@@ -24,8 +24,7 @@ conn = connect.createConnection(database)
 @commands.command(
     name="description",
     aliases=['sd'],
-    description="Add or Update your servers description",
-    usage=""
+    help="Add or Update your servers description"
 )
 async def description(ctx, *args):
     description = " ".join(args)

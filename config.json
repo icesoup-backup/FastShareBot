@@ -1,8 +1,8 @@
 {
     "botToken": "NzUyODM2MjgzMjg5ODI5Mzk2.X1dbbA.xI-nRw0iErByNWWQ4XTvNG0yeDk",
     "databaseLocation": "bot",
-    "defaultChannel": "bot-testing2",
-    "defaultCategory": "Test",
+    "defaultChannel": "Server",
+    "defaultCategory": "Share",
     "Channels": {
         "802863664775823390": "testing-zone",
         "437252877916831744": "bot-testing1",

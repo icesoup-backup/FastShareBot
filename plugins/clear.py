@@ -3,8 +3,7 @@ from discord.ext import commands
 
 @commands.command(
     name="clear",
-    description="Clear recent messages",
-    help="clear [ammount]"
+    help="Clear recent messages"
 )
 async def clear(ctx, ammount=5):
     if ctx.author.guild_permissions.manage_channels:
