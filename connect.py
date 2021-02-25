@@ -127,10 +127,10 @@ def getAutoMsgData(conn):
     """
     get data to display in a message
     :param conn:
-    :return: data of users with subLvl 2
+    :return: data of users with subLvl >= 2
     """
     sql = ''' SELECT guildName, inviteLink, description FROM Users
-              WHERE subLevel = 2 '''
+              WHERE subLevel >= 2 '''
     cur = conn.cursor()
     cur.execute(sql)
     msgData = cur.fetchall()
