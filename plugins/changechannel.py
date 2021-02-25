@@ -39,6 +39,7 @@ async def changechannel(ctx, channel):
             json.dump(config, f, indent=4)
 
         await ctx.send(f'Channel changed to: `{channel}`')
+        ctx.bot.reload_extension("plugins.share")
     else:
         await ctx.send("Please upgrade your subscription plan")
 

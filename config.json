@@ -1,11 +1,11 @@
 {
-    "botToken": "NzUyODM2MjgzMjg5ODI5Mzk2.X1dbbA.xI-nRw0iErByNWWQ4XTvNG0yeDk",
-    "databaseLocation": "bot",
-    "defaultChannel": "Server",
+    "botToken": "ODA5ODg0NDIwMDY0MTQ5NTE0.YCblpA.vxBp1DcYkLrWYKXEsNlsBaLxVY0",
+    "databaseLocation": "botDatabase",
+    "defaultChannel": "servers",
     "defaultCategory": "Share",
     "Channels": {
-        "802863664775823390": "testing-zone",
+        "802863664775823390": "testing-zone1",
         "437252877916831744": "bot-testing1",
-        "806464440684904469": "bot-testing2"
+        "806464440684904469": "servers"
     }
 }
