@@ -39,6 +39,7 @@ async def share(ctx):
     # print(f"Share: {flag}")
     userTable = connect.getData(conn)
     author = str(ctx.author)
+    # print(author)
     guild = connect.getGuild(conn, [author])[0]
     subLevel = connect.getSubLevel(conn, [author])[0]
     serverCount = len(ctx.bot.guilds)
@@ -75,7 +76,7 @@ async def share(ctx):
                 elif subLevel == 2:
                     await checkTime(ctx, timeLeft, 8, author, msgText,
                                     channel)
-                else:
+                elif subLevel == 3:
                     await checkTime(ctx, timeLeft, 4, author, msgText,
                                     channel)
     if loopCount == serverCount:

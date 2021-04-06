@@ -34,7 +34,7 @@ def createUser(conn, user):
 
 def getData(conn):
     """
-    Query all enities in the Users table
+    Query all entities in the Users table
     :param conn: the Connection object
     :return: rows
     """
@@ -58,6 +58,7 @@ def getSubLevel(conn, data):
     cur = conn.cursor()
     cur.execute(sql, data)
     subLevel = cur.fetchone()
+    print(f"getSubLevel: {subLevel}")
     return subLevel
 
 

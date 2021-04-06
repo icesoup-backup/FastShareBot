@@ -72,7 +72,7 @@ async def on_guild_join(guild):
     # print(f"Owner: {type(serverOwner)} \n Name: {type(serverName)} \n"
     #       f"Invite: {type(serverInvite)}")
 
-    # creating a databse entry for the server
+    # creating a database entry for the server
     data = (serverOwner, serverName, serverInvite)
     connect.createUser(conn, data)
 
